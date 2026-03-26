@@ -161,17 +161,16 @@
     (function() {
       const field = document.getElementById('star-field');
       const frag  = document.createDocumentFragment();
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 250; i++) {
         const s = document.createElement('span');
-        const size = Math.random() * 2 + 1;
+        const size = Math.random() < 0.15 ? (Math.random() * 2.5 + 2) : (Math.random() * 1.5 + 0.8);
         s.style.cssText = [
           `left:${Math.random()*100}%`,
           `top:${Math.random()*100}%`,
           `width:${size}px`,
           `height:${size}px`,
-          `opacity:${Math.random()*0.6+0.2}`,
-          `--tw:${(Math.random()*4+2).toFixed(1)}s`,
-          `animation-delay:${(Math.random()*5).toFixed(1)}s`
+          `--tw:${(Math.random()*5+1.5).toFixed(1)}s`,
+          `animation-delay:${(Math.random()*8).toFixed(1)}s`
         ].join(';');
         frag.appendChild(s);
       }
