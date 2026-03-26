@@ -3,85 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ソウルミッション診断 · アース・メタバース</title>
-  <meta name="description" content="Nao Stantonのアース・メタバース・フレームワークに基づき、あなたのソウルタイプと宇宙的ミッションを発見しましょう。15の質問で、サーバー、アーティザン、ウォリアー、パフォーマー、スカラー、プリースト、キングのどれかが明らかになります。" />
+  <title>ソウルミッション診断 · 地球大暴露</title>
+  <meta name="description" content="Nao Stantonの「地球大暴露」フレームワークに基づき、あなたのソウルタイプと宇宙的ミッションを発見しましょう。15の質問で明らかになります。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Language Toggle ──────────────────────────────────────────────── */
+    body { font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif; }
+
     .lang-toggle-wrap {
       position: fixed;
       top: 18px;
       right: 18px;
       z-index: 999;
     }
-
     #lang-toggle {
-      background: rgba(15, 15, 42, 0.85);
+      background: rgba(15,15,42,0.85);
       border: 1px solid rgba(212,175,55,0.4);
       color: #D4AF37;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Noto Sans JP', sans-serif;
       font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.04em;
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 20px;
       cursor: pointer;
       backdrop-filter: blur(8px);
-      transition: all 0.3s ease;
-      white-space: nowrap;
+      transition: all 0.25s ease;
     }
-
     #lang-toggle:hover {
       background: rgba(212,175,55,0.15);
       border-color: rgba(212,175,55,0.7);
-      box-shadow: 0 0 12px rgba(212,175,55,0.25);
     }
 
-    /* ── JP-friendly font adjustments ─────────────────────────────────── */
-    #question-text,
-    .answer-btn,
-    .result-section p,
-    .welcome-subtitle,
-    .secondary-mention {
-      font-family: 'Inter', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      line-height: 1.8;
-    }
-
-    .welcome-title {
-      font-family: 'Playfair Display', 'Hiragino Mincho ProN', 'Noto Serif JP', serif;
-    }
-
-    /* Slightly larger for JP readability */
-    @media (max-width: 600px) {
-      #question-text { font-size: 1rem; }
-      .answer-btn span:last-child { font-size: 0.9rem; }
-    }
+    /* Section labels in Japanese */
+    .result-section-label { font-family: 'Noto Sans JP', sans-serif; }
   </style>
 </head>
 <body>
 
-  <!-- ── Language Toggle ────────────────────────────────────────────────── -->
+  <!-- ── Language Toggle ─────────────────────────────────────────────── -->
   <div class="lang-toggle-wrap">
-    <button id="lang-toggle" aria-label="言語を切り替える">🌐 English</button>
+    <button id="lang-toggle" onclick="window.location.href='index.html'">🌐 English</button>
   </div>
 
-  <!-- ── Star Field ─────────────────────────────────────────────────────── -->
+  <!-- ── Star Field ─────────────────────────────────────────────────── -->
   <div class="star-field" id="star-field" aria-hidden="true"></div>
 
-  <!-- ── App ────────────────────────────────────────────────────────────── -->
+  <!-- ── App ────────────────────────────────────────────────────────── -->
   <div id="app">
 
     <!-- SCREEN 1: Welcome -->
     <section id="welcome-screen" class="screen active" role="main" aria-label="ようこそ">
       <div class="card">
-        <p class="welcome-eyebrow">🌌 アース・メタバース · ソウルミッション診断</p>
+        <p class="welcome-eyebrow">🌌 地球大暴露 · ソウルミッション診断</p>
         <h1 class="welcome-title">
-          宇宙はあなたをここに送った<br>
+          宇宙はあなたをここに送った——<br>
           <span class="accent">理由がある。</span><br>
           一緒に見つけよう。
         </h1>
         <p class="welcome-subtitle">
-          「あなたは生物学的な偶然ではない。あなたはこの人生を——この体、この時代、この課題を——特定のソウルミッションを果たすために選んだ。15の質問で、あなたのエネルギーが7つのソウルタイプのどれに属するかを発見しよう。」
+          「あなたは生物学の偶然の産物ではありません。あなたはこの人生を選んだのです——この体、この時代、このまさにその挑戦を——特定のミッションを果たすために。15の質問で、あなたのエネルギーが7つのソウルタイプのどれに属するかを発見しましょう。」
         </p>
         <div class="soul-types-preview" aria-label="7つのソウルタイプ">
           <span class="soul-badge">🌿 サーバー</span>
@@ -128,7 +111,7 @@
 
         <!-- Header -->
         <div class="result-header">
-          <span id="result-emoji" role="img" aria-label="ソウルタイプの絵文字"></span>
+          <span id="result-emoji" role="img" aria-label="ソウルタイプ絵文字"></span>
           <h2 id="result-name"></h2>
           <p id="result-tagline"></p>
         </div>
@@ -143,19 +126,19 @@
 
         <!-- Trap -->
         <div class="result-section section-trap">
-          <div class="result-section-label">⚠️ マトリックスの罠</div>
+          <div class="result-section-label">⚠️ あなたのマトリックスの罠</div>
           <p id="result-trap"></p>
         </div>
 
         <!-- Activation -->
         <div class="result-section section-activation">
-          <div class="result-section-label">⚡ B-Lifeの転機・アクティベーション</div>
+          <div class="result-section-label">⚡ あなたのB-Life起動</div>
           <p id="result-activation"></p>
         </div>
 
         <!-- Planet -->
         <div class="result-section section-planet">
-          <div class="result-section-label">🪐 ホームプラネットのエネルギー</div>
+          <div class="result-section-label">🪐 あなたのホームプラネット・エネルギー</div>
           <p id="result-planet"></p>
         </div>
 
@@ -164,7 +147,7 @@
 
         <!-- Actions -->
         <div class="result-actions">
-          <button id="print-btn" class="btn-primary">🖨️ ミッションを印刷</button>
+          <button id="print-btn" class="btn-primary">🖨️ ミッションカードを印刷</button>
           <button id="retake-btn" class="btn-secondary">🔄 もう一度診断する</button>
         </div>
 
@@ -174,12 +157,11 @@
   </div><!-- /#app -->
 
   <script>
-    // ── Generate star field ──────────────────────────────────────────────
+    // ── Star Field ───────────────────────────────────────────────────────
     (function() {
       const field = document.getElementById('star-field');
-      const count = 200;
       const frag  = document.createDocumentFragment();
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < 200; i++) {
         const s = document.createElement('span');
         const size = Math.random() * 2 + 1;
         s.style.cssText = [
