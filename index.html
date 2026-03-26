@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Your Soul Mission · Earth Metaverse</title>
+  <meta name="description" content="Discover your soul type and cosmic mission based on Nao Stanton's Earth Metaverse framework. A 15-question quiz reveals whether you are a Server, Artisan, Warrior, Performer, Scholar, Priest, or King." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Star Field ─────────────────────────────────────────────────── -->
+  <div class="star-field" id="star-field" aria-hidden="true"></div>
+
+  <!-- ── App ────────────────────────────────────────────────────────── -->
+  <div id="app">
+
+    <!-- SCREEN 1: Welcome -->
+    <section id="welcome-screen" class="screen active" role="main" aria-label="Welcome">
+      <div class="card">
+        <p class="welcome-eyebrow">🌌 Earth Metaverse · Soul Mission Quiz</p>
+        <h1 class="welcome-title">
+          The universe sent you here<br>
+          <span class="accent">for a reason.</span><br>
+          Let's find out why.
+        </h1>
+        <p class="welcome-subtitle">
+          "You are not a random product of biology. You chose this life — this body, this time, this exact set of challenges — to fulfill a specific mission. In 15 questions, discover which of the 7 Soul Types your energy belongs to."
+        </p>
+        <div class="soul-types-preview" aria-label="The 7 Soul Types">
+          <span class="soul-badge">🌿 Server</span>
+          <span class="soul-badge">🎨 Artisan</span>
+          <span class="soul-badge">⚔️ Warrior</span>
+          <span class="soul-badge">✨ Performer</span>
+          <span class="soul-badge">📚 Scholar</span>
+          <span class="soul-badge">🕊️ Priest</span>
+          <span class="soul-badge">👑 King</span>
+        </div>
+        <button id="begin-btn" class="btn-primary">
+          ✦ Begin Your Discovery
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Quiz -->
+    <section id="quiz-screen" class="screen" role="main" aria-label="Quiz">
+      <div class="card">
+
+        <!-- Progress -->
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span id="progress-text">Question 1 of 15</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Question -->
+        <p id="question-text"></p>
+
+        <!-- Answers -->
+        <div id="answers-grid" role="group" aria-label="Answer choices"></div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: Results -->
+    <section id="result-screen" class="screen" role="main" aria-label="Your Soul Mission Results">
+      <div class="card">
+
+        <!-- Header -->
+        <div class="result-header">
+          <span id="result-emoji" role="img" aria-label="Soul type emoji"></span>
+          <h2 id="result-name"></h2>
+          <p id="result-tagline"></p>
+        </div>
+
+        <div class="cosmic-divider">✦ · · · ✦</div>
+
+        <!-- Mission -->
+        <div class="result-section section-mission">
+          <div class="result-section-label">⭐ Your Soul Mission</div>
+          <p id="result-mission"></p>
+        </div>
+
+        <!-- Trap -->
+        <div class="result-section section-trap">
+          <div class="result-section-label">⚠️ Your Matrix Trap</div>
+          <p id="result-trap"></p>
+        </div>
+
+        <!-- Activation -->
+        <div class="result-section section-activation">
+          <div class="result-section-label">⚡ Your B-Life Activation</div>
+          <p id="result-activation"></p>
+        </div>
+
+        <!-- Planet -->
+        <div class="result-section section-planet">
+          <div class="result-section-label">🪐 Your Home Planet Energy</div>
+          <p id="result-planet"></p>
+        </div>
+
+        <!-- Secondary -->
+        <p class="secondary-mention" id="secondary-type"></p>
+
+        <!-- Actions -->
+        <div class="result-actions">
+          <button id="print-btn" class="btn-primary">🖨️ Print My Mission</button>
+          <button id="retake-btn" class="btn-secondary">🔄 Retake Quiz</button>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /#app -->
+
+  <script>
+    // ── Generate star field ──────────────────────────────────────────────
+    (function() {
+      const field = document.getElementById('star-field');
+      const count = 200;
+      const frag  = document.createDocumentFragment();
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        const size = Math.random() * 2 + 1;
+        s.style.cssText = [
+          `left:${Math.random()*100}%`,
+          `top:${Math.random()*100}%`,
+          `width:${size}px`,
+          `height:${size}px`,
+          `opacity:${Math.random()*0.6+0.2}`,
+          `--tw:${(Math.random()*4+2).toFixed(1)}s`,
+          `animation-delay:${(Math.random()*5).toFixed(1)}s`
+        ].join(';');
+        frag.appendChild(s);
+      }
+      field.appendChild(frag);
+    })();
+  </script>
+  <script src="quiz.js"></script>
+</body>
+</html>
