@@ -1,24 +1,3 @@
-// ── Star Field ───────────────────────────────────────────────
-(function createStars() {
-  const container = document.getElementById('stars');
-  const count = 120;
-  for (let i = 0; i < count; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    const size = Math.random() * 2.5 + 0.5;
-    const opFrom = (Math.random() * 0.3 + 0.05).toFixed(2);
-    const opTo   = (Math.random() * 0.6 + 0.3).toFixed(2);
-    const dur    = (Math.random() * 4 + 2).toFixed(1);
-    star.style.cssText = `
-      width: ${size}px; height: ${size}px;
-      top: ${Math.random() * 100}%; left: ${Math.random() * 100}%;
-      --dur: ${dur}s; --op-from: ${opFrom}; --op-to: ${opTo};
-      animation-delay: ${(Math.random() * 4).toFixed(1)}s;
-    `;
-    container.appendChild(star);
-  }
-})();
-
 // ── Quiz Data ────────────────────────────────────────────────
 const questions = [
   {
@@ -228,7 +207,6 @@ const soulTypes = {
 // ── State ────────────────────────────────────────────────────
 let current = 0;
 let scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
-
 const letters = ['A', 'B', 'C', 'D', 'E'];
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -240,48 +218,59 @@ function showScreen(id) {
 
 function setProgress(idx) {
   const pct = Math.round((idx / questions.length) * 100);
-  document.querySelector('.progress-bar').style.setProperty('--pct', pct + '%');
-  document.getElementById('progress-label').textContent = `${idx} / ${questions.length}`;
+  const bar = document.getElementById('progress-bar');
+  const text = document.getElementById('progress-text');
+  const pctEl = document.getElementById('progress-pct');
+  const track = document.querySelector('.progress-track');
+  if (bar)  bar.style.width = pct + '%';
+  if (text) text.textContent = `Question ${idx + 1} of ${questions.length}`;
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (track) track.setAttribute('aria-valuenow', pct);
 }
 
 // ── Quiz Logic ───────────────────────────────────────────────
 function startQuiz() {
   current = 0;
   scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
-  showScreen('screen-quiz');
+  showScreen('quiz-screen');
   renderQuestion();
 }
 
 function renderQuestion() {
   const q = questions[current];
-  const card = document.getElementById('question-card');
+  const questionEl = document.getElementById('question-text');
+  const answersEl  = document.getElementById('answers-grid');
 
-  card.classList.add('fading');
+  // Fade out
+  if (questionEl) questionEl.style.opacity = '0';
+  if (answersEl)  answersEl.style.opacity  = '0';
+
   setTimeout(() => {
-    document.getElementById('question-number').textContent = `Question ${current + 1} of ${questions.length}`;
-    document.getElementById('question-text').textContent = q.text;
-
-    const answersEl = document.getElementById('answers');
-    answersEl.innerHTML = '';
-    q.answers.forEach((ans, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'answer-btn';
-      btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
-      btn.onclick = () => selectAnswer(ans.type, btn);
-      answersEl.appendChild(btn);
-    });
-
     setProgress(current);
-    card.classList.remove('fading');
-  }, 280);
+
+    if (questionEl) {
+      questionEl.textContent = q.text;
+      questionEl.style.opacity = '1';
+    }
+
+    if (answersEl) {
+      answersEl.innerHTML = '';
+      q.answers.forEach((ans, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
+        btn.addEventListener('click', () => selectAnswer(ans.type, btn));
+        answersEl.appendChild(btn);
+      });
+      answersEl.style.opacity = '1';
+    }
+  }, 200);
 }
 
 function selectAnswer(type, btn) {
-  // Highlight
   document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
 
-  // Score and advance after brief pause
   setTimeout(() => {
     scores[type] = (scores[type] || 0) + 1;
     current++;
@@ -295,7 +284,6 @@ function selectAnswer(type, btn) {
 
 // ── Results ──────────────────────────────────────────────────
 function showResults() {
-  // Sort by score
   const sorted = Object.entries(scores)
     .filter(([, v]) => v > 0)
     .sort((a, b) => b[1] - a[1]);
@@ -305,28 +293,31 @@ function showResults() {
   const primary   = soulTypes[primaryKey];
   const secondary = secondaryKey ? soulTypes[secondaryKey] : null;
 
-  document.getElementById('result-emoji').textContent    = primary.emoji;
-  document.getElementById('result-name').textContent     = primary.name;
-  document.getElementById('result-tagline').textContent  = primary.tagline;
-  document.getElementById('result-mission').textContent  = primary.mission;
-  document.getElementById('result-trap').textContent     = primary.trap;
+  document.getElementById('result-emoji').textContent      = primary.emoji;
+  document.getElementById('result-name').textContent       = primary.name;
+  document.getElementById('result-tagline').textContent    = primary.tagline;
+  document.getElementById('result-mission').textContent    = primary.mission;
+  document.getElementById('result-trap').textContent       = primary.trap;
   document.getElementById('result-activation').textContent = primary.activation;
-  document.getElementById('result-planet').textContent   = primary.planet;
+  document.getElementById('result-planet').textContent     = primary.planet;
 
-  const secEl = document.getElementById('result-secondary');
-  if (secondary) {
-    secEl.textContent = `You also carry strong ${secondary.emoji} ${secondary.name} energy — ${secondary.tagline.toLowerCase()}. This secondary soul type colors how you express your primary mission.`;
-  } else {
-    secEl.textContent = `Your soul type came through with rare clarity — undivided in its mission and direction.`;
+  const secEl = document.getElementById('secondary-type');
+  if (secEl) {
+    secEl.textContent = secondary
+      ? `You also carry strong ${secondary.emoji} ${secondary.name} energy — ${secondary.tagline.toLowerCase()}. This secondary soul type colors how you express your primary mission.`
+      : `Your soul type came through with rare clarity — undivided in its mission and direction.`;
   }
 
-  showScreen('screen-results');
+  showScreen('result-screen');
 }
 
-function retakeQuiz() {
-  startQuiz();
-}
+// ── Event Listeners ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const beginBtn  = document.getElementById('begin-btn');
+  const retakeBtn = document.getElementById('retake-btn');
+  const printBtn  = document.getElementById('print-btn');
 
-// ── Expose globals ───────────────────────────────────────────
-window.startQuiz  = startQuiz;
-window.retakeQuiz = retakeQuiz;
+  if (beginBtn)  beginBtn.addEventListener('click', startQuiz);
+  if (retakeBtn) retakeBtn.addEventListener('click', startQuiz);
+  if (printBtn)  printBtn.addEventListener('click', () => window.print());
+});
