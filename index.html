@@ -6,8 +6,41 @@
   <title>Find Your Soul Mission · Earth Metaverse</title>
   <meta name="description" content="Discover your soul type and cosmic mission based on Nao Stanton's Earth Metaverse framework. A 15-question quiz reveals whether you are a Server, Artisan, Warrior, Performer, Scholar, Priest, or King." />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .lang-toggle-wrap {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 999;
+    }
+    #lang-toggle {
+      background: rgba(15, 15, 42, 0.85);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #D4AF37;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    #lang-toggle:hover {
+      background: rgba(212,175,55,0.15);
+      border-color: rgba(212,175,55,0.7);
+      box-shadow: 0 0 12px rgba(212,175,55,0.25);
+    }
+  </style>
 </head>
 <body>
+
+  <!-- ── Language Toggle ────────────────────────────────────────────── -->
+  <div class="lang-toggle-wrap">
+    <button id="lang-toggle" onclick="window.location.href='index-jp.html'" aria-label="Switch to Japanese">🌸 日本語</button>
+  </div>
 
   <!-- ── Star Field ─────────────────────────────────────────────────── -->
   <div class="star-field" id="star-field" aria-hidden="true"></div>

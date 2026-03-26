@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ソウルミッション診断 · アース・メタバース</title>
+  <meta name="description" content="Nao Stantonのアース・メタバース・フレームワークに基づき、あなたのソウルタイプと宇宙的ミッションを発見しましょう。15の質問で、サーバー、アーティザン、ウォリアー、パフォーマー、スカラー、プリースト、キングのどれかが明らかになります。" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Language Toggle ──────────────────────────────────────────────── */
+    .lang-toggle-wrap {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 999;
+    }
+
+    #lang-toggle {
+      background: rgba(15, 15, 42, 0.85);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: #D4AF37;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    #lang-toggle:hover {
+      background: rgba(212,175,55,0.15);
+      border-color: rgba(212,175,55,0.7);
+      box-shadow: 0 0 12px rgba(212,175,55,0.25);
+    }
+
+    /* ── JP-friendly font adjustments ─────────────────────────────────── */
+    #question-text,
+    .answer-btn,
+    .result-section p,
+    .welcome-subtitle,
+    .secondary-mention {
+      font-family: 'Inter', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+      line-height: 1.8;
+    }
+
+    .welcome-title {
+      font-family: 'Playfair Display', 'Hiragino Mincho ProN', 'Noto Serif JP', serif;
+    }
+
+    /* Slightly larger for JP readability */
+    @media (max-width: 600px) {
+      #question-text { font-size: 1rem; }
+      .answer-btn span:last-child { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Language Toggle ────────────────────────────────────────────────── -->
+  <div class="lang-toggle-wrap">
+    <button id="lang-toggle" aria-label="言語を切り替える">🌐 English</button>
+  </div>
+
+  <!-- ── Star Field ─────────────────────────────────────────────────────── -->
+  <div class="star-field" id="star-field" aria-hidden="true"></div>
+
+  <!-- ── App ────────────────────────────────────────────────────────────── -->
+  <div id="app">
+
+    <!-- SCREEN 1: Welcome -->
+    <section id="welcome-screen" class="screen active" role="main" aria-label="ようこそ">
+      <div class="card">
+        <p class="welcome-eyebrow">🌌 アース・メタバース · ソウルミッション診断</p>
+        <h1 class="welcome-title">
+          宇宙はあなたをここに送った<br>
+          <span class="accent">理由がある。</span><br>
+          一緒に見つけよう。
+        </h1>
+        <p class="welcome-subtitle">
+          「あなたは生物学的な偶然ではない。あなたはこの人生を——この体、この時代、この課題を——特定のソウルミッションを果たすために選んだ。15の質問で、あなたのエネルギーが7つのソウルタイプのどれに属するかを発見しよう。」
+        </p>
+        <div class="soul-types-preview" aria-label="7つのソウルタイプ">
+          <span class="soul-badge">🌿 サーバー</span>
+          <span class="soul-badge">🎨 アーティザン</span>
+          <span class="soul-badge">⚔️ ウォリアー</span>
+          <span class="soul-badge">✨ パフォーマー</span>
+          <span class="soul-badge">📚 スカラー</span>
+          <span class="soul-badge">🕊️ プリースト</span>
+          <span class="soul-badge">👑 キング</span>
+        </div>
+        <button id="begin-btn" class="btn-primary">
+          ✦ 診断を始める
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Quiz -->
+    <section id="quiz-screen" class="screen" role="main" aria-label="診断">
+      <div class="card">
+
+        <!-- Progress -->
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span id="progress-text">質問 1 / 15</span>
+            <span id="progress-pct">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- Question -->
+        <p id="question-text"></p>
+
+        <!-- Answers -->
+        <div id="answers-grid" role="group" aria-label="回答の選択肢"></div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: Results -->
+    <section id="result-screen" class="screen" role="main" aria-label="ソウルミッション診断結果">
+      <div class="card">
+
+        <!-- Header -->
+        <div class="result-header">
+          <span id="result-emoji" role="img" aria-label="ソウルタイプの絵文字"></span>
+          <h2 id="result-name"></h2>
+          <p id="result-tagline"></p>
+        </div>
+
+        <div class="cosmic-divider">✦ · · · ✦</div>
+
+        <!-- Mission -->
+        <div class="result-section section-mission">
+          <div class="result-section-label">⭐ あなたのソウルミッション</div>
+          <p id="result-mission"></p>
+        </div>
+
+        <!-- Trap -->
+        <div class="result-section section-trap">
+          <div class="result-section-label">⚠️ マトリックスの罠</div>
+          <p id="result-trap"></p>
+        </div>
+
+        <!-- Activation -->
+        <div class="result-section section-activation">
+          <div class="result-section-label">⚡ B-Lifeの転機・アクティベーション</div>
+          <p id="result-activation"></p>
+        </div>
+
+        <!-- Planet -->
+        <div class="result-section section-planet">
+          <div class="result-section-label">🪐 ホームプラネットのエネルギー</div>
+          <p id="result-planet"></p>
+        </div>
+
+        <!-- Secondary -->
+        <p class="secondary-mention" id="secondary-type"></p>
+
+        <!-- Actions -->
+        <div class="result-actions">
+          <button id="print-btn" class="btn-primary">🖨️ ミッションを印刷</button>
+          <button id="retake-btn" class="btn-secondary">🔄 もう一度診断する</button>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /#app -->
+
+  <script>
+    // ── Generate star field ──────────────────────────────────────────────
+    (function() {
+      const field = document.getElementById('star-field');
+      const count = 200;
+      const frag  = document.createDocumentFragment();
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        const size = Math.random() * 2 + 1;
+        s.style.cssText = [
+          `left:${Math.random()*100}%`,
+          `top:${Math.random()*100}%`,
+          `width:${size}px`,
+          `height:${size}px`,
+          `opacity:${Math.random()*0.6+0.2}`,
+          `--tw:${(Math.random()*4+2).toFixed(1)}s`,
+          `animation-delay:${(Math.random()*5).toFixed(1)}s`
+        ].join(';');
+        frag.appendChild(s);
+      }
+      field.appendChild(frag);
+    })();
+  </script>
+  <script src="quiz-jp.js"></script>
+</body>
+</html>
