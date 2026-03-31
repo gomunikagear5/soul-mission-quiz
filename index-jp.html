@@ -151,6 +151,45 @@
           <button id="retake-btn" class="btn-secondary">🔄 もう一度診断する</button>
         </div>
 
+        <!-- Deep Read CTA -->
+        <div style="margin-top:1.5rem;text-align:center;">
+          <a id="deep-read-link" href="deep-read.html" style="display:inline-block;color:#D4AF37;font-size:0.95rem;letter-spacing:0.03em;text-decoration:none;border-bottom:1px solid rgba(212,175,55,0.4);padding-bottom:2px;transition:all 0.2s;">
+            ✨ もっと深く知りたい方へ：フル・ソウルマトリックス・リーディングを受け取る →
+          </a>
+        </div>
+
+        <!-- Email Capture -->
+        <div id="email-capture-section" style="margin-top:2rem;padding:1.5rem;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.25);border-radius:12px;">
+          <h3 style="color:#D4AF37;font-size:1.1rem;font-weight:600;margin:0 0 0.5rem;text-align:center;letter-spacing:0.02em;">
+            ソウルミッション完全ガイドを受け取る
+          </h3>
+          <p style="color:rgba(255,255,255,0.65);font-size:0.85rem;text-align:center;margin:0 0 1rem;">
+            あなたのソウルタイプに合わせた完全ガイドを無料でお届けします。
+          </p>
+          <form id="email-form" onsubmit="submitEmailFormJP(event)" style="display:flex;flex-direction:column;gap:0.75rem;">
+            <input
+              type="email"
+              id="email-input"
+              placeholder="メールアドレスを入力"
+              required
+              style="background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.35);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:0.95rem;outline:none;font-family:'Noto Sans JP',sans-serif;"
+            />
+            <button type="submit" style="background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:0.95rem;padding:0.75rem 1.5rem;border:none;border-radius:8px;cursor:pointer;letter-spacing:0.04em;font-family:'Noto Sans JP',sans-serif;transition:opacity 0.2s;">
+              ガイドを受け取る ✦
+            </button>
+          </form>
+          <p id="email-success" style="display:none;color:#D4AF37;text-align:center;margin-top:0.75rem;font-size:0.9rem;">
+            ✅ ご登録ありがとうございます！受信箱をご確認ください。
+          </p>
+        </div>
+
+        <!-- Book CTA -->
+        <div style="margin-top:1.5rem;text-align:center;">
+          <a href="https://www.amazon.co.jp/dp/XXXXXXXXXX" target="_blank" rel="noopener" style="display:inline-block;background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:0.95rem;padding:0.85rem 2rem;border-radius:10px;text-decoration:none;letter-spacing:0.03em;box-shadow:0 0 24px rgba(212,175,55,0.35);transition:all 0.2s;font-family:'Noto Sans JP',sans-serif;">
+            📖 もっと深く知りたい方へ：地球メタバースの本を読む →
+          </a>
+        </div>
+
       </div>
     </section>
 
@@ -177,6 +216,63 @@
       field.appendChild(frag);
     })();
   </script>
+  <script>
+    function submitEmailFormJP(e) {
+      e.preventDefault();
+      const email = document.getElementById('email-input').value;
+      const soulType = document.getElementById('result-name')?.textContent || '';
+      const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID'; // Charles: replace with real form ID
+      fetch(`https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ api_key: 'CONVERTKIT_API_KEY', email, fields: { soul_type: soulType, lang: 'jp' } })
+      }).catch(() => {});
+      document.getElementById('email-form').style.display = 'none';
+      document.getElementById('email-success').style.display = 'block';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const observer = new MutationObserver(() => {
+        const nameEl = document.getElementById('result-name');
+        const link = document.getElementById('deep-read-link');
+        if (nameEl && link && nameEl.textContent) {
+          link.href = 'deep-read.html?type=' + encodeURIComponent(nameEl.textContent.trim());
+        }
+      });
+      const nameEl = document.getElementById('result-name');
+      if (nameEl) observer.observe(nameEl, { childList: true, characterData: true, subtree: true });
+    });
+  </script>
   <script src="quiz-jp.js"></script>
+
+  <!-- Pretext text measurement — auto-sizes result cards, Japanese text wrapping -->
+  <script type="module">
+    import { sizeResultCard } from './pretext-measure.js';
+
+    // Japanese uses different font and tighter line wrapping rules
+    // setLocale('ja') enables Japanese-aware word break logic in Pretext
+    import('https://esm.sh/@chenglou/pretext').then(({ setLocale }) => {
+      setLocale('ja');
+    }).catch(() => {});
+
+    const resultScreen = document.getElementById('result-screen');
+    if (resultScreen) {
+      const observer = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          if (m.type === 'attributes' && m.attributeName === 'class') {
+            if (resultScreen.classList.contains('active')) {
+              requestAnimationFrame(() => {
+                // Japanese: use Noto Sans JP or system Japanese font
+                sizeResultCard(
+                  '16px "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif',
+                  28  // slightly taller line height for Japanese glyphs
+                );
+              });
+            }
+          }
+        }
+      });
+      observer.observe(resultScreen, { attributes: true });
+    }
+  </script>
 </body>
 </html>
