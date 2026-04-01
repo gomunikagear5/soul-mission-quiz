@@ -81,6 +81,35 @@
       </div>
     </section>
 
+    <!-- SCREEN 1.5: Email Gate -->
+    <section id="email-gate-screen" class="screen" role="main" aria-label="メールアドレス入力">
+      <div class="card" style="max-width:480px;margin:0 auto;text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:1rem;">🌌</div>
+        <h2 style="font-size:1.4rem;margin-bottom:0.5rem;">結果をどこに送りますか？</h2>
+        <p style="color:rgba(255,255,255,0.7);margin-bottom:1.5rem;font-size:0.95rem;">メールアドレスを入力していただくと、あなたのソウルタイプの鑑定と宇宙的使命ガイドを無料でお届けします。</p>
+        <form id="email-gate-form" onsubmit="submitEmailGate(event)" style="display:flex;flex-direction:column;gap:0.85rem;">
+          <input
+            type="text"
+            id="gate-name-input"
+            placeholder="お名前（ニックネームでもOK）"
+            style="padding:0.75rem 1rem;border-radius:8px;border:1px solid rgba(212,175,55,0.4);background:rgba(255,255,255,0.07);color:#fff;font-size:1rem;outline:none;"
+            required
+          />
+          <input
+            type="email"
+            id="gate-email-input"
+            placeholder="メールアドレス"
+            style="padding:0.75rem 1rem;border-radius:8px;border:1px solid rgba(212,175,55,0.4);background:rgba(255,255,255,0.07);color:#fff;font-size:1rem;outline:none;"
+            required
+          />
+          <button type="submit" class="btn-primary" style="margin-top:0.25rem;">
+            ✦ ソウルタイプを診断する
+          </button>
+        </form>
+        <p style="margin-top:1rem;font-size:0.78rem;color:rgba(255,255,255,0.4);">スパムは送りません。いつでも配信停止できます。</p>
+      </div>
+    </section>
+
     <!-- SCREEN 2: Quiz -->
     <section id="quiz-screen" class="screen" role="main" aria-label="診断">
       <div class="card">

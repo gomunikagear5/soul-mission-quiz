@@ -313,12 +313,30 @@ function showResults() {
 }
 
 // ── イベントリスナー ──────────────────────────────────────────────────────
+function submitEmailGate(event) {
+  event.preventDefault();
+  const name  = document.getElementById('gate-name-input').value.trim();
+  const email = document.getElementById('gate-email-input').value.trim();
+  window._capturedName  = name;
+  window._capturedEmail = email;
+  const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID';
+  const CONVERTKIT_API_KEY = 'CONVERTKIT_API_KEY';
+  if (CONVERTKIT_FORM_ID !== 'CONVERTKIT_FORM_ID') {
+    fetch(`https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ api_key: CONVERTKIT_API_KEY, email, fields: { first_name: name, stage: 'pre-quiz', language: 'ja' } })
+    }).catch(() => {});
+  }
+  startQuiz();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const beginBtn  = document.getElementById('begin-btn');
   const retakeBtn = document.getElementById('retake-btn');
   const printBtn  = document.getElementById('print-btn');
 
-  if (beginBtn)  beginBtn.addEventListener('click', startQuiz);
+  if (beginBtn)  beginBtn.addEventListener('click', () => showScreen('email-gate-screen'));
   if (retakeBtn) retakeBtn.addEventListener('click', startQuiz);
   if (printBtn)  printBtn.addEventListener('click', () => window.print());
 });
