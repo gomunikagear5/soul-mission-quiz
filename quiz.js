@@ -84,16 +84,31 @@ function buildSession() {
     console.error('Question bank not loaded — check question-bank.js script tag');
     return [];
   }
-  // Shuffle full bank
-  const shuffled = [...bank].sort(() => Math.random() - 0.5);
-  // Pick first QUESTIONS_PER_SESSION unique questions
+  // Fisher-Yates shuffle — guaranteed no repeats
+  function fisherYates(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  const shuffled = fisherYates(bank);
+  // Pick first QUESTIONS_PER_SESSION questions
   const picked = shuffled.slice(0, QUESTIONS_PER_SESSION);
+  // Safety net: deduplicate by id (shouldn't happen with Fisher-Yates but just in case)
+  const seen = new Set();
+  const deduped = picked.filter(q => {
+    if (seen.has(q.id)) return false;
+    seen.add(q.id);
+    return true;
+  });
   // Shuffle answer order within each (skip forced_choice — those have optionA/B only)
-  return picked.map(q => {
+  return deduped.map(q => {
     if (q.type === 'forced_choice') return q;
     return {
       ...q,
-      answers: [...q.answers].sort(() => Math.random() - 0.5)
+      answers: fisherYates(q.answers)
     };
   });
 }

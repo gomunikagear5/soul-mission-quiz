@@ -84,13 +84,29 @@ function buildSession() {
     console.error('日本語質問バンクが読み込まれていません — question-bank-jp.js を確認してください');
     return [];
   }
-  const shuffled = [...bank].sort(() => Math.random() - 0.5);
+  // Fisher-Yates シャッフル — 重複なしを保証
+  function fisherYates(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  const shuffled = fisherYates(bank);
   const picked   = shuffled.slice(0, QUESTIONS_PER_SESSION);
-  return picked.map(q => {
+  // 安全チェック: id の重複を除去（Fisher-Yates では起きないはずだが念のため）
+  const seen = new Set();
+  const deduped = picked.filter(q => {
+    if (seen.has(q.id)) return false;
+    seen.add(q.id);
+    return true;
+  });
+  return deduped.map(q => {
     if (q.type === 'forced_choice') return q;
     return {
       ...q,
-      answers: [...q.answers].sort(() => Math.random() - 0.5)
+      answers: fisherYates(q.answers)
     };
   });
 }
