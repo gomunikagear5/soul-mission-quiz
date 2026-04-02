@@ -173,43 +173,26 @@
           <button id="print-btn" class="btn-primary">🖨️ Print My Mission</button>
           <button id="retake-btn" class="btn-secondary">🔄 Retake Quiz</button>
         </div>
+        <p style="text-align:center;font-size:0.78rem;color:rgba(255,255,255,0.4);margin:0.5rem 0 0;">
+          Not quite right? Each retake draws a fresh set of questions — your reading is unique.
+        </p>
 
-        <!-- Deep Read CTA -->
-        <div style="margin-top:1.5rem;text-align:center;">
-          <a id="deep-read-link" href="deep-read.html" style="display:inline-block;color:#D4AF37;font-size:0.95rem;letter-spacing:0.03em;text-decoration:none;border-bottom:1px solid rgba(212,175,55,0.4);padding-bottom:2px;transition:all 0.2s;">
-            ✨ Want to go deeper? Get your Full Soul Matrix Reading →
+        <!-- CTAs -->
+        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem;align-items:center;">
+          <!-- Primary: Full Soul Matrix Reading -->
+          <a
+            id="deep-read-btn"
+            href="deep-read.html"
+            style="display:block;width:100%;max-width:420px;background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:1rem;padding:1rem 1.5rem;border-radius:12px;text-decoration:none;letter-spacing:0.03em;text-align:center;box-shadow:0 0 28px rgba(212,175,55,0.4);transition:all 0.25s;">
+            📖 Get Your Full Soul Matrix Reading — $9
           </a>
-        </div>
-
-        <!-- Email Capture -->
-        <div id="email-capture-section" style="margin-top:2rem;padding:1.5rem;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.25);border-radius:12px;">
-          <h3 style="color:#D4AF37;font-size:1.1rem;font-weight:600;margin:0 0 0.5rem;text-align:center;letter-spacing:0.02em;">
-            Get your complete Soul Mission guide
-          </h3>
-          <p style="color:rgba(255,255,255,0.65);font-size:0.85rem;text-align:center;margin:0 0 1rem;">
-            Receive a personalized guide for your soul type — free.
-          </p>
-          <form id="email-form" onsubmit="submitEmailForm(event)" style="display:flex;flex-direction:column;gap:0.75rem;">
-            <input
-              type="email"
-              id="email-input"
-              placeholder="Your email address"
-              required
-              style="background:rgba(255,255,255,0.07);border:1px solid rgba(212,175,55,0.35);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:0.95rem;outline:none;font-family:inherit;"
-            />
-            <button type="submit" style="background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:0.95rem;padding:0.75rem 1.5rem;border:none;border-radius:8px;cursor:pointer;letter-spacing:0.04em;transition:opacity 0.2s;">
-              Send me the guide ✦
-            </button>
-          </form>
-          <p id="email-success" style="display:none;color:#D4AF37;text-align:center;margin-top:0.75rem;font-size:0.9rem;">
-            ✅ You're in! Check your inbox for your Soul Mission guide.
-          </p>
-        </div>
-
-        <!-- Book CTA -->
-        <div style="margin-top:1.5rem;text-align:center;">
-          <a href="https://www.amazon.com/dp/9798886454543" target="_blank" rel="noopener" style="display:inline-block;background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:0.95rem;padding:0.85rem 2rem;border-radius:10px;text-decoration:none;letter-spacing:0.03em;box-shadow:0 0 24px rgba(212,175,55,0.35);transition:all 0.2s;">
-            📖 Ready to go deeper? Get the full Earth Matrix book →
+          <!-- Secondary: Book -->
+          <a
+            href="https://www.amazon.com/dp/9798886454543"
+            target="_blank"
+            rel="noopener"
+            style="display:block;width:100%;max-width:420px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.4);color:#D4AF37;font-weight:600;font-size:0.95rem;padding:0.9rem 1.5rem;border-radius:12px;text-decoration:none;letter-spacing:0.02em;text-align:center;transition:all 0.25s;">
+            📚 Read the book: The Earth Matrix
           </a>
         </div>
 
@@ -241,32 +224,20 @@
     })();
   </script>
   <script>
-    function submitEmailForm(e) {
-      e.preventDefault();
-      const email = document.getElementById('email-input').value;
-      const soulType = document.getElementById('result-name')?.textContent || '';
-      const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID'; // Charles: replace with real form ID
-      fetch(`https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ api_key: 'CONVERTKIT_API_KEY', email, fields: { soul_type: soulType } })
-      }).catch(() => {}); // graceful — show success regardless
-      document.getElementById('email-form').style.display = 'none';
-      document.getElementById('email-success').style.display = 'block';
-    }
-    // Sync deep read link with soul type
+    // Sync deep-read-btn href with soul type when results render
     document.addEventListener('DOMContentLoaded', function() {
       const observer = new MutationObserver(() => {
         const nameEl = document.getElementById('result-name');
-        const link = document.getElementById('deep-read-link');
-        if (nameEl && link && nameEl.textContent) {
-          link.href = 'deep-read.html?type=' + encodeURIComponent(nameEl.textContent.trim());
+        const btn = document.getElementById('deep-read-btn');
+        if (nameEl && btn && nameEl.textContent) {
+          btn.href = 'deep-read.html?type=' + encodeURIComponent(nameEl.textContent.trim());
         }
       });
       const nameEl = document.getElementById('result-name');
       if (nameEl) observer.observe(nameEl, { childList: true, characterData: true, subtree: true });
     });
   </script>
+  <script src="question-bank.js"></script>
   <script src="quiz.js"></script>
 
   <!-- Pretext text measurement — auto-sizes result cards, prevents overflow -->

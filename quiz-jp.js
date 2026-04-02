@@ -1,146 +1,6 @@
-// ── ソウルミッション診断 — 日本語版 v2 ────────────────────────────────────────
-// Nao Stanton「地球大暴露」(永岡書店, 2023) に基づく
-// Knowledge Base v2026-03-14 から抽出
-
-// ── 質問データ ────────────────────────────────────────────────────────────────
-const questions = [
-  {
-    text: "大切な人が傷ついているとき、あなたの本能は？",
-    answers: [
-      { text: "すべてを置いて、ただそばにいる。何も解決しなくていい、そこにいることが大切", type: "S" },
-      { text: "手紙、贈り物、特別なジェスチャーなど、心のこもった何かを作る", type: "A" },
-      { text: "立ち上がる力を見つける手助けをする。問題に正面から向き合う", type: "W" },
-      { text: "視点が変わるような話やひらめきを伝える。新しい見方を届ける", type: "P" }
-    ]
-  },
-  {
-    text: "「自分の使命」という言葉を聞いたとき、どんなイメージが浮かびますか？",
-    answers: [
-      { text: "目の前の人たちを深く支え、その人たちが花開く場を作ること", type: "S" },
-      { text: "この世界にまだ存在しない美しいものを創り出すこと", type: "A" },
-      { text: "大切なものを守り、重要な変化を力強く前進させること", type: "W" },
-      { text: "魂が目覚めるような言葉や表現を世界に届けること", type: "P" }
-    ]
-  },
-  {
-    text: "部屋に入ったとき、あなたは自然と何に気づきますか？",
-    answers: [
-      { text: "困っている人、疎外されている人、サポートが必要な人", type: "S" },
-      { text: "美しさや機能性——もっとこうなれば、という改善のビジョン", type: "A" },
-      { text: "力関係と空気感——何が動いていて、何が変わる必要があるか", type: "W" },
-      { text: "場のエネルギー——明るくしたい、動かしたい、何か伝えたいという衝動", type: "P" }
-    ]
-  },
-  {
-    text: "あなたにとって「知識」は何のためにありますか？",
-    answers: [
-      { text: "人をより良く助けるための実践的なツール", type: "S" },
-      { text: "新しい創造物にインスピレーションを与えるもの", type: "A" },
-      { text: "目標達成のための戦略を立てるもの", type: "W" },
-      { text: "あらゆる現象の奥にある深いパターンを理解するもの", type: "Sc" }
-    ]
-  },
-  {
-    text: "人生を振り返ったとき、最も誇りに思いたいのはどんなことですか？",
-    answers: [
-      { text: "あなたのおかげで愛され、大切にされたと感じた人たちの存在", type: "S" },
-      { text: "あなたにしか作れなかった、美しくて革新的な作品や仕事", type: "A" },
-      { text: "本当に大切なことのために、迷わず立ち上がったこと", type: "W" },
-      { text: "あなたが伝えた真実によって、人々の見方が変わったこと", type: "Sc" }
-    ]
-  },
-  {
-    text: "グループが迷子になったとき、あなたはどうしますか？",
-    answers: [
-      { text: "リードしようとする人を全力でサポートする", type: "S" },
-      { text: "誰も思いつかなかった、まったく新しいアプローチを提案する", type: "A" },
-      { text: "自分が主導権を取り、物事が動き出すまで構造を作る", type: "K" },
-      { text: "判断せずに場を保持し、自然に明確さが生まれるのを待ちながら導く", type: "Pr" }
-    ]
-  },
-  {
-    text: "あなたが最も深く満足を感じる瞬間は？",
-    answers: [
-      { text: "「あなたのおかげで人生が変わった」と言われたとき", type: "S" },
-      { text: "何もないところからゼロで作り上げたものが完成したとき", type: "A" },
-      { text: "困難を乗り越えて、重要な目標を達成したとき", type: "W" },
-      { text: "別の魂と言葉を超えた深いところでつながったとき", type: "Pr" }
-    ]
-  },
-  {
-    text: "あなたの人生の目的として最も近いものは？",
-    answers: [
-      { text: "他の人々が夢を築ける、静かで安定した土台になること", type: "S" },
-      { text: "世界に、あなたが来なければ生まれなかった美しさをもたらすこと", type: "A" },
-      { text: "神聖で真実なものを守り、それが失われないようにすること", type: "W" },
-      { text: "人々を、彼らが知らなかった深い現実に目覚めさせること", type: "Pr" }
-    ]
-  },
-  {
-    text: "あなたを最も疲弊させるものは何ですか？",
-    answers: [
-      { text: "役に立てない、または誰かの迷惑になっているという感覚", type: "S" },
-      { text: "創造性を殺す、硬直した、魂のないプロセスや環境", type: "A" },
-      { text: "不正義が目の前で起きているのに、誰も何もしないこと", type: "W" },
-      { text: "表面だけで終わる、深みのない会話や関係", type: "Sc" }
-    ]
-  },
-  {
-    text: "あなたが最も「生きている」と感じるのはいつですか？",
-    answers: [
-      { text: "誰かが「あなたのおかげで」と心から伝えてくれたとき", type: "S" },
-      { text: "クリエイティブなフローの中で、まったく新しいものを創っているとき", type: "A" },
-      { text: "重要なミッションに向かって、確実に前進しているとき", type: "W" },
-      { text: "大勢の前で話したり、自分を表現し、何かを伝えているとき", type: "P" }
-    ]
-  },
-  {
-    text: "あなたの最も深い恐れは何ですか？",
-    answers: [
-      { text: "誰かの負担になること、または本当に愛されていないこと", type: "S" },
-      { text: "意味のあるものを何も創らないまま、普通の人生を終えること", type: "A" },
-      { text: "最も大切なものを守れず、無力のまま傍観者になること", type: "W" },
-      { text: "見えない存在として生き、自分の声が誰にも届かないこと", type: "P" }
-    ]
-  },
-  {
-    text: "危機のとき、周囲はあなたに何を求めますか？",
-    answers: [
-      { text: "感情的なサポート——温かさと揺るぎない安定した存在感", type: "S" },
-      { text: "誰も考えなかったような、創造的でユニークな解決策", type: "A" },
-      { text: "決断力と、明確で迷いのないリーダーシップ", type: "K" },
-      { text: "誰もが薄々気づいていた、でも言えなかった真実", type: "Sc" }
-    ]
-  },
-  {
-    text: "B-Life（宇宙的な生き方）に入ったとき、あなたの奉仕はどんな形をとりますか？",
-    answers: [
-      { text: "目の前にいる人々を、深く・丁寧に・継続的に育てること", type: "S" },
-      { text: "あなたが生きている間も、死後も残り続ける作品を作ること", type: "A" },
-      { text: "未来の世代を守るための仕組みやシステムを作ること", type: "K" },
-      { text: "人々の現実認識そのものを変える知恵を伝え続けること", type: "Pr" }
-    ]
-  },
-  {
-    text: "「転換期（Turning Point）」を迎えた今、あなたが最も恐れていることは？",
-    answers: [
-      { text: "本当に大切な人たちのためになれないまま時間が過ぎること", type: "S" },
-      { text: "内側にある本当の作品・表現が、未完のまま終わること", type: "A" },
-      { text: "戦うべきことに気づかずに、大切なものを失うこと", type: "W" },
-      { text: "自分の洞察や知識が、誰かを変える前に消えてしまうこと", type: "Sc" }
-    ]
-  },
-  {
-    text: "完全に目覚めたB-Lifeの自分を想像すると、どんな姿ですか？",
-    answers: [
-      { text: "愛で深く繋がった、温かく繁栄するコミュニティのハブ", type: "S" },
-      { text: "自分にしか作れなかった作品群と、それが届けた変化", type: "A" },
-      { text: "正しいことが通り、大切なものが守られた、秩序ある未来", type: "W" },
-      { text: "自分の言葉や存在で現実が変わった、何百万もの魂たち", type: "P" },
-      { text: "ひとりひとりが自分の力を見つけた、統一された運動の中心に立つ自分", type: "K" }
-    ]
-  }
-];
+// ── ソウルミッション診断（日本語版）— Ungameable Edition ─────────────────────
+// question-bank-jp.js から毎回ランダムに15問を抽出
+// シャッフル・逆スコア・強制選択・正規化スコアに対応
 
 // ── 7つのソウルタイプ ──────────────────────────────────────────────────────
 const soulTypes = {
@@ -187,14 +47,14 @@ const soulTypes = {
     mission: "あなたの魂は「スカラー」として地球大暴露に参加しました。あなたの使命は、現実の奥にある深いパターンを理解し、見つけたものを分かち合うこと。スカラーは観察者——他者が見逃すパターンを見つけるほど切り離された視点と、その意味を理解するほど深い洞察を持っています。知識は自分のためだけにあるのではありません。",
     trap: "マトリックスの罠：「もっと知識が必要」と言い続けて、永遠に公開しないこと。スカラーが「十分に知っている」と感じる瞬間は決して来ません——それがマトリックスの仕掛けです。あなたの不完全な知恵は、今まさに誰かが探している答えです。",
     activation: "B-Life起動：今日、ひとつの洞察を公開してください。不完全でも構いません。あなたの統合は、まだ暗闇の中で探している誰かへの道を照らします。宇宙への注文：「私の知恵は今日、必要な人に届いています」。",
-    planet: "ホームプラネット：あなたのエネルギーはレムリア文明の古代の知恵を持っています——知恵の守護者、地球の記憶、神聖な知識の番人の場所。日本のJomon（縄文）人との深いつながりがあるかもしれません。あなたは骨の中に図書館を持っています。"
+    planet: "ホームプラネット：あなたのエネルギーはレムリア文明の古代の知恵を持っています——知恵の守護者、地球の記憶、神聖な知識の番人の場所。あなたは骨の中に図書館を持っています。"
   },
   Pr: {
     name: "プリースト",
     emoji: "🕊️",
     tagline: "愛を教え、より高いビジョンを保持する者",
     mission: "あなたの魂は「プリースト」として地球大暴露に参加しました。あなたの使命は、愛を教え、あなたが出会うすべての魂に対して最も高い可能性のビジョンを保持すること。プリーストはその人自身がまだ見えていない潜在性を見つけ、それを鏡で映して見せます——教義ではなく、純粋な伝達を通して。",
-    trap: "マトリックスの罠：自分のミッションを犠牲にして、すべての人を支えようとすること。空のカリス（聖杯）からは注ぐことができません。「霊的なもの」への逃避として高い視点を使い、地球での責任を回避すること——これもプリーストのマトリックスの罠です。",
+    trap: "マトリックスの罠：自分のミッションを犠牲にして、すべての人を支えようとすること。空のカリス（聖杯）からは注ぐことができません。自己犠牲として高い視点を使い、地球での責任を回避すること——これもプリーストの罠です。",
     activation: "B-Life起動：今日、誰かのために場を保持してください。修正するためでも、助言するためでもなく——ただその人がまだ自分の中に見えない光を、あなたが見てあげるために。宇宙への注文：「私は自分を満たしながら、あふれた愛から人々を導きます」。",
     planet: "ホームプラネット：あなたのエネルギーはシリウス星系の癒しの周波数を持っています——神聖な愛の伝達、魂の癒し、宇宙的な聖職の場所。あなたはより高い次元からの愛の大使として、この地球メタバースに来ました。"
   },
@@ -203,16 +63,37 @@ const soulTypes = {
     emoji: "👑",
     tagline: "愛によって人々を統一し、進化的使命へと導く者",
     mission: "あなたの魂は「キング」として地球大暴露に参加しました。あなたの使命は、人々を集め、整え、ひとりでは到達できないものへと導くこと——支配ではなく、愛に基づく権威を通して。キングは混沌から秩序を作り出す自然なリーダー。本当の主権は、力で支配することではなく、規模での奉仕から生まれます。",
-    trap: "マトリックスの罠：ビジョンと招待ではなく、コントロールと権威によってリードしようとすること。マトリックスはキングのエネルギーを愛の統一から恐れによる支配へと堕落させます。「でも（but）」の言語でビジョンを語るとき、あなたは宇宙への注文をキャンセルしています。",
+    trap: "マトリックスの罠：ビジョンと招待ではなく、コントロールと権威によってリードしようとすること。マトリックスはキングのエネルギーを愛の統一から恐れによる支配へと堕落させます。",
     activation: "B-Life起動：今日、あなたのビジョンを3人に伝えてください——感銘を与えるためではなく、本当に招待するために。キングはドローイングフォワード（前方への引き込み）でリードします。宇宙への注文：「私のビジョンは必要な人々を引き寄せ、統一された運動が今生まれています」。",
     planet: "ホームプラネット：あなたのエネルギーはプレアデス星団の主権の光を持っています——宇宙的なリーダーシップ、銀河的なガバナンス、進化的なビジョンの場所。あなたは散らばった光を集めるために、この地球メタバースにアバターを送り込みました。"
   }
 };
 
 // ── 状態管理 ──────────────────────────────────────────────────────────────
-let current = 0;
-let scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+let sessionQuestions = [];
+let current     = 0;
+let rawScores   = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+let typeCounts  = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
 const letters = ['A', 'B', 'C', 'D', 'E'];
+const QUESTIONS_PER_SESSION = 15;
+
+// ── セッション構築 ────────────────────────────────────────────────────────
+function buildSession() {
+  const bank = (typeof questionBankJP !== 'undefined') ? questionBankJP : [];
+  if (bank.length === 0) {
+    console.error('日本語質問バンクが読み込まれていません — question-bank-jp.js を確認してください');
+    return [];
+  }
+  const shuffled = [...bank].sort(() => Math.random() - 0.5);
+  const picked   = shuffled.slice(0, QUESTIONS_PER_SESSION);
+  return picked.map(q => {
+    if (q.type === 'forced_choice') return q;
+    return {
+      ...q,
+      answers: [...q.answers].sort(() => Math.random() - 0.5)
+    };
+  });
+}
 
 // ── ヘルパー関数 ──────────────────────────────────────────────────────────
 function showScreen(id) {
@@ -222,27 +103,29 @@ function showScreen(id) {
 }
 
 function setProgress(idx) {
-  const pct   = Math.round((idx / questions.length) * 100);
+  const pct   = Math.round((idx / sessionQuestions.length) * 100);
   const bar   = document.getElementById('progress-bar');
   const text  = document.getElementById('progress-text');
   const pctEl = document.getElementById('progress-pct');
   const track = document.querySelector('.progress-track');
   if (bar)   bar.style.width = pct + '%';
-  if (text)  text.textContent = `質問 ${idx + 1} / ${questions.length}`;
+  if (text)  text.textContent = `質問 ${idx + 1} / ${sessionQuestions.length}`;
   if (pctEl) pctEl.textContent = pct + '%';
   if (track) track.setAttribute('aria-valuenow', pct);
 }
 
 // ── クイズロジック ────────────────────────────────────────────────────────
 function startQuiz() {
-  current = 0;
-  scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  current     = 0;
+  rawScores   = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  typeCounts  = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  sessionQuestions = buildSession();
   showScreen('quiz-screen');
   renderQuestion();
 }
 
 function renderQuestion() {
-  const q = questions[current];
+  const q = sessionQuestions[current];
   const questionEl = document.getElementById('question-text');
   const answersEl  = document.getElementById('answers-grid');
 
@@ -251,41 +134,84 @@ function renderQuestion() {
 
   setTimeout(() => {
     setProgress(current);
+
     if (questionEl) {
       questionEl.textContent = q.text;
       questionEl.style.opacity = '1';
     }
+
     if (answersEl) {
       answersEl.innerHTML = '';
-      q.answers.forEach((ans, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'answer-btn';
-        btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
-        btn.addEventListener('click', () => selectAnswer(ans.type, btn));
-        answersEl.appendChild(btn);
-      });
+
+      if (q.type === 'forced_choice') {
+        answersEl.style.display = 'flex';
+        answersEl.style.flexDirection = 'column';
+        answersEl.style.gap = '0.75rem';
+        [q.optionA, q.optionB].forEach((opt, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'answer-btn';
+          btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${opt.text}</span>`;
+          btn.addEventListener('click', () => selectForcedChoice(opt, btn));
+          answersEl.appendChild(btn);
+        });
+      } else {
+        answersEl.style.display = '';
+        q.answers.forEach((ans, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'answer-btn';
+          btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
+          btn.addEventListener('click', () => selectAnswer(ans, btn));
+          answersEl.appendChild(btn);
+        });
+      }
+
       answersEl.style.opacity = '1';
     }
   }, 200);
 }
 
-function selectAnswer(type, btn) {
+function recordScore(type, score) {
+  rawScores[type]  = (rawScores[type]  || 0) + score;
+  typeCounts[type] = (typeCounts[type] || 0) + 1;
+}
+
+function selectAnswer(ans, btn) {
   document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   setTimeout(() => {
-    scores[type] = (scores[type] || 0) + 1;
-    current++;
-    if (current < questions.length) {
-      renderQuestion();
-    } else {
-      showResults();
-    }
+    recordScore(ans.type, ans.score);
+    advance();
   }, 380);
+}
+
+function selectForcedChoice(opt, btn) {
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  setTimeout(() => {
+    recordScore(opt.type, opt.score);
+    advance();
+  }, 380);
+}
+
+function advance() {
+  current++;
+  if (current < sessionQuestions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
 }
 
 // ── 結果表示 ──────────────────────────────────────────────────────────────
 function showResults() {
-  const sorted = Object.entries(scores)
+  // 正規化：タイプごとの出題数で割って公平なスコアに
+  const normalized = {};
+  for (const t of Object.keys(rawScores)) {
+    const count = typeCounts[t] || 0;
+    normalized[t] = count > 0 ? rawScores[t] / count : 0;
+  }
+
+  const sorted = Object.entries(normalized)
     .filter(([, v]) => v > 0)
     .sort((a, b) => b[1] - a[1]);
 
@@ -312,15 +238,16 @@ function showResults() {
   showScreen('result-screen');
 }
 
-// ── イベントリスナー ──────────────────────────────────────────────────────
+// ── メールゲート ──────────────────────────────────────────────────────────
 function submitEmailGate(event) {
   event.preventDefault();
   const name  = document.getElementById('gate-name-input').value.trim();
   const email = document.getElementById('gate-email-input').value.trim();
   window._capturedName  = name;
   window._capturedEmail = email;
-  const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID';
-  const CONVERTKIT_API_KEY = 'CONVERTKIT_API_KEY';
+
+  const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID'; // Charles: 実際のフォームIDに置き換え
+  const CONVERTKIT_API_KEY = 'CONVERTKIT_API_KEY';  // Charles: 実際のAPIキーに置き換え
   if (CONVERTKIT_FORM_ID !== 'CONVERTKIT_FORM_ID') {
     fetch(`https://api.convertkit.com/v3/forms/${CONVERTKIT_FORM_ID}/subscribe`, {
       method: 'POST',
@@ -331,12 +258,13 @@ function submitEmailGate(event) {
   startQuiz();
 }
 
+// ── イベントリスナー ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const beginBtn  = document.getElementById('begin-btn');
   const retakeBtn = document.getElementById('retake-btn');
   const printBtn  = document.getElementById('print-btn');
 
   if (beginBtn)  beginBtn.addEventListener('click', () => showScreen('email-gate-screen'));
-  if (retakeBtn) retakeBtn.addEventListener('click', startQuiz);
+  if (retakeBtn) retakeBtn.addEventListener('click', startQuiz); // 毎回新しいランダムシード
   if (printBtn)  printBtn.addEventListener('click', () => window.print());
 });

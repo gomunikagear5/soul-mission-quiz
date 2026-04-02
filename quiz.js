@@ -1,143 +1,8 @@
-// ── Quiz Data ────────────────────────────────────────────────
-const questions = [
-  {
-    text: "When someone you love is hurting, your instinct is to:",
-    answers: [
-      { text: "Drop everything and simply be present with them", type: "S" },
-      { text: "Create something meaningful — a letter, a gift, a gesture", type: "A" },
-      { text: "Help them find the strength to fight back", type: "W" },
-      { text: "Share a story or insight that shifts their perspective", type: "P" }
-    ]
-  },
-  {
-    text: "Your ideal life would involve:",
-    answers: [
-      { text: "Deeply caring for a community or family", type: "S" },
-      { text: "Creating art, products, or systems that did not exist before", type: "A" },
-      { text: "Building an organization or movement with discipline and impact", type: "W" },
-      { text: "Speaking, performing, or teaching to awaken large audiences", type: "P" }
-    ]
-  },
-  {
-    text: "When you walk into a room, you naturally:",
-    answers: [
-      { text: "Notice who needs help or feels left out", type: "S" },
-      { text: "Notice the aesthetics — what could be more beautiful or functional", type: "A" },
-      { text: "Assess the dynamics — who has power, what needs to change", type: "W" },
-      { text: "Lighten the energy with humor, warmth, or a new perspective", type: "P" }
-    ]
-  },
-  {
-    text: "The knowledge you gather is primarily for:",
-    answers: [
-      { text: "Helping others more effectively", type: "S" },
-      { text: "Inspiring new creative work", type: "A" },
-      { text: "Creating better strategies to move forward", type: "W" },
-      { text: "Synthesizing and understanding the deep pattern beneath everything", type: "Sc" }
-    ]
-  },
-  {
-    text: "What would you most like to be remembered for?",
-    answers: [
-      { text: "The way you made people feel loved and cared for", type: "S" },
-      { text: "Something beautiful or innovative you created", type: "A" },
-      { text: "Standing up for something that truly mattered", type: "W" },
-      { text: "A truth you helped others see clearly", type: "Sc" }
-    ]
-  },
-  {
-    text: "When a group is stuck or lost, you:",
-    answers: [
-      { text: "Support whoever steps up to lead", type: "S" },
-      { text: "Propose a creative new approach nobody considered", type: "A" },
-      { text: "Take charge and create structure until things move", type: "K" },
-      { text: "Hold space and guide until clarity naturally emerges", type: "Pr" }
-    ]
-  },
-  {
-    text: "Your deepest satisfaction comes from:",
-    answers: [
-      { text: "Knowing someone's life is genuinely better because of you", type: "S" },
-      { text: "Finishing something you built from nothing", type: "A" },
-      { text: "Achieving a goal you fought hard for", type: "W" },
-      { text: "Connecting deeply with another person's soul", type: "Pr" }
-    ]
-  },
-  {
-    text: "What feels most like your life purpose?",
-    answers: [
-      { text: "Being the quiet foundation others can build on", type: "S" },
-      { text: "Bringing new forms of beauty into the world", type: "A" },
-      { text: "Protecting what is sacred and true", type: "W" },
-      { text: "Waking people up to a deeper reality", type: "Pr" }
-    ]
-  },
-  {
-    text: "Your relationship with knowledge is:",
-    answers: [
-      { text: "Practical — you learn what helps people directly", type: "S" },
-      { text: "Aesthetic — you learn what inspires new creation", type: "A" },
-      { text: "Strategic — you learn what creates advantage", type: "W" },
-      { text: "Synthesizing — you collect everything and find the hidden pattern", type: "Sc" }
-    ]
-  },
-  {
-    text: "What drains you most?",
-    answers: [
-      { text: "Feeling unhelpful or like a burden to others", type: "S" },
-      { text: "Rigid, uncreative, soul-crushing processes", type: "A" },
-      { text: "Injustice going unchallenged while people do nothing", type: "W" },
-      { text: "Shallow conversation that never goes beneath the surface", type: "Sc" }
-    ]
-  },
-  {
-    text: "You feel most alive when:",
-    answers: [
-      { text: "Someone tells you how much you helped them", type: "S" },
-      { text: "You are in creative flow — making something entirely new", type: "A" },
-      { text: "You are in motion, pushing a mission forward", type: "W" },
-      { text: "You are on stage, speaking, or performing", type: "P" }
-    ]
-  },
-  {
-    text: "Your greatest fear is:",
-    answers: [
-      { text: "Being a burden or truly unloved", type: "S" },
-      { text: "Living an ordinary life without creating anything meaningful", type: "A" },
-      { text: "Being powerless to protect what matters most", type: "W" },
-      { text: "Being unseen, unheard, or invisible", type: "P" }
-    ]
-  },
-  {
-    text: "In a crisis, others come to you for:",
-    answers: [
-      { text: "Emotional support, warmth, and steady presence", type: "S" },
-      { text: "Creative solutions nobody else thought of", type: "A" },
-      { text: "Leadership and decisive, clear action", type: "K" },
-      { text: "The uncomfortable truth that needs to be said", type: "Sc" }
-    ]
-  },
-  {
-    text: "Your ideal form of service to humanity is:",
-    answers: [
-      { text: "Nurturing the people right in front of you, deeply", type: "S" },
-      { text: "Creating work that will outlast your lifetime", type: "A" },
-      { text: "Building systems that protect future generations", type: "K" },
-      { text: "Transmitting wisdom that changes how people see reality", type: "Pr" }
-    ]
-  },
-  {
-    text: "When you imagine your fully awakened life, it looks like:",
-    answers: [
-      { text: "A warm, thriving community held together by love", type: "S" },
-      { text: "A body of work the world could not have created without you", type: "A" },
-      { text: "A protected, structured world where the right things prevail", type: "W" },
-      { text: "Millions of people whose reality shifted because of what you shared", type: "P" },
-      { text: "A unified movement where people found their power together", type: "K" }
-    ]
-  }
-];
+// ── Soul Mission Quiz (EN) — Ungameable Edition ─────────────────────────────
+// Pulls 15 random questions per session from question-bank.js
+// Shuffles answer order, normalizes scores, supports forced-choice + reversed
 
+// ── Soul Type Definitions ────────────────────────────────────────────────────
 const soulTypes = {
   S: {
     name: "Server",
@@ -204,12 +69,36 @@ const soulTypes = {
   }
 };
 
-// ── State ────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────────
+let sessionQuestions = [];
 let current = 0;
-let scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+let rawScores   = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+let typeCounts  = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 }; // # of questions per type
 const letters = ['A', 'B', 'C', 'D', 'E'];
+const QUESTIONS_PER_SESSION = 15;
 
-// ── Helpers ──────────────────────────────────────────────────
+// ── Session Builder ───────────────────────────────────────────────────────────
+function buildSession() {
+  const bank = (typeof questionBank !== 'undefined') ? questionBank : [];
+  if (bank.length === 0) {
+    console.error('Question bank not loaded — check question-bank.js script tag');
+    return [];
+  }
+  // Shuffle full bank
+  const shuffled = [...bank].sort(() => Math.random() - 0.5);
+  // Pick first QUESTIONS_PER_SESSION unique questions
+  const picked = shuffled.slice(0, QUESTIONS_PER_SESSION);
+  // Shuffle answer order within each (skip forced_choice — those have optionA/B only)
+  return picked.map(q => {
+    if (q.type === 'forced_choice') return q;
+    return {
+      ...q,
+      answers: [...q.answers].sort(() => Math.random() - 0.5)
+    };
+  });
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -217,31 +106,32 @@ function showScreen(id) {
 }
 
 function setProgress(idx) {
-  const pct = Math.round((idx / questions.length) * 100);
-  const bar = document.getElementById('progress-bar');
+  const pct  = Math.round((idx / sessionQuestions.length) * 100);
+  const bar  = document.getElementById('progress-bar');
   const text = document.getElementById('progress-text');
   const pctEl = document.getElementById('progress-pct');
   const track = document.querySelector('.progress-track');
   if (bar)  bar.style.width = pct + '%';
-  if (text) text.textContent = `Question ${idx + 1} of ${questions.length}`;
+  if (text) text.textContent = `Question ${idx + 1} of ${sessionQuestions.length}`;
   if (pctEl) pctEl.textContent = pct + '%';
   if (track) track.setAttribute('aria-valuenow', pct);
 }
 
-// ── Quiz Logic ───────────────────────────────────────────────
+// ── Quiz Logic ────────────────────────────────────────────────────────────────
 function startQuiz() {
-  current = 0;
-  scores = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  current    = 0;
+  rawScores  = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  typeCounts = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
+  sessionQuestions = buildSession();
   showScreen('quiz-screen');
   renderQuestion();
 }
 
 function renderQuestion() {
-  const q = questions[current];
+  const q = sessionQuestions[current];
   const questionEl = document.getElementById('question-text');
   const answersEl  = document.getElementById('answers-grid');
 
-  // Fade out
   if (questionEl) questionEl.style.opacity = '0';
   if (answersEl)  answersEl.style.opacity  = '0';
 
@@ -255,36 +145,83 @@ function renderQuestion() {
 
     if (answersEl) {
       answersEl.innerHTML = '';
-      q.answers.forEach((ans, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'answer-btn';
-        btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
-        btn.addEventListener('click', () => selectAnswer(ans.type, btn));
-        answersEl.appendChild(btn);
-      });
+
+      if (q.type === 'forced_choice') {
+        // Two-button forced choice layout
+        answersEl.style.display = 'flex';
+        answersEl.style.flexDirection = 'column';
+        answersEl.style.gap = '0.75rem';
+
+        [q.optionA, q.optionB].forEach((opt, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'answer-btn';
+          btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${opt.text}</span>`;
+          btn.addEventListener('click', () => selectForcedChoice(opt, btn));
+          answersEl.appendChild(btn);
+        });
+      } else {
+        answersEl.style.display = '';
+        q.answers.forEach((ans, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'answer-btn';
+          btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${ans.text}</span>`;
+          btn.addEventListener('click', () => selectAnswer(ans, btn));
+          answersEl.appendChild(btn);
+        });
+      }
+
       answersEl.style.opacity = '1';
     }
   }, 200);
 }
 
-function selectAnswer(type, btn) {
+function recordScore(type, score) {
+  rawScores[type]  = (rawScores[type]  || 0) + score;
+  typeCounts[type] = (typeCounts[type] || 0) + 1;
+}
+
+function selectAnswer(ans, btn) {
   document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
 
   setTimeout(() => {
-    scores[type] = (scores[type] || 0) + 1;
-    current++;
-    if (current < questions.length) {
-      renderQuestion();
-    } else {
-      showResults();
-    }
+    const q = sessionQuestions[current];
+    // If reversed, the score still goes to the stated type (bank already encodes correct direction)
+    recordScore(ans.type, ans.score);
+    advance();
   }, 380);
 }
 
-// ── Results ──────────────────────────────────────────────────
+function selectForcedChoice(opt, btn) {
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  setTimeout(() => {
+    recordScore(opt.type, opt.score);
+    advance();
+  }, 380);
+}
+
+function advance() {
+  current++;
+  if (current < sessionQuestions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// ── Results ───────────────────────────────────────────────────────────────────
 function showResults() {
-  const sorted = Object.entries(scores)
+  // Normalize: divide raw score by number of questions that targeted each type
+  // This prevents bias from random pulls with uneven type coverage
+  const normalized = {};
+  for (const t of Object.keys(rawScores)) {
+    const count = typeCounts[t] || 0;
+    normalized[t] = count > 0 ? rawScores[t] / count : 0;
+  }
+
+  const sorted = Object.entries(normalized)
     .filter(([, v]) => v > 0)
     .sort((a, b) => b[1] - a[1]);
 
@@ -311,17 +248,15 @@ function showResults() {
   showScreen('result-screen');
 }
 
-// ── Email Gate (pre-quiz capture) ────────────────────────────
+// ── Email Gate ────────────────────────────────────────────────────────────────
 function submitEmailGate(event) {
   event.preventDefault();
   const name  = document.getElementById('gate-name-input').value.trim();
   const email = document.getElementById('gate-email-input').value.trim();
 
-  // Store for later use (e.g. pre-fill result screen form)
   window._capturedName  = name;
   window._capturedEmail = email;
 
-  // Subscribe to ConvertKit pre-quiz list
   const CONVERTKIT_FORM_ID = 'CONVERTKIT_FORM_ID'; // Charles: replace with real form ID
   const CONVERTKIT_API_KEY = 'CONVERTKIT_API_KEY';  // Charles: replace with real API key
   if (CONVERTKIT_FORM_ID !== 'CONVERTKIT_FORM_ID') {
@@ -329,20 +264,19 @@ function submitEmailGate(event) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ api_key: CONVERTKIT_API_KEY, email, fields: { first_name: name, stage: 'pre-quiz' } })
-    }).catch(() => {}); // fire and forget
+    }).catch(() => {});
   }
 
-  // Start the quiz
   startQuiz();
 }
 
-// ── Event Listeners ──────────────────────────────────────────
+// ── Event Listeners ───────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const beginBtn  = document.getElementById('begin-btn');
   const retakeBtn = document.getElementById('retake-btn');
   const printBtn  = document.getElementById('print-btn');
 
   if (beginBtn)  beginBtn.addEventListener('click', () => showScreen('email-gate-screen'));
-  if (retakeBtn) retakeBtn.addEventListener('click', startQuiz);
+  if (retakeBtn) retakeBtn.addEventListener('click', startQuiz); // new random seed each time
   if (printBtn)  printBtn.addEventListener('click', () => window.print());
 });
