@@ -75,7 +75,7 @@ let current = 0;
 let rawScores   = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 };
 let typeCounts  = { S: 0, A: 0, W: 0, P: 0, Sc: 0, Pr: 0, K: 0 }; // # of questions per type
 const letters = ['A', 'B', 'C', 'D', 'E'];
-const QUESTIONS_PER_SESSION = 15;
+const QUESTIONS_PER_SESSION = 30;
 
 // ── Session Builder ───────────────────────────────────────────────────────────
 function buildSession() {

@@ -130,71 +130,74 @@
 
     <!-- SCREEN 3: Results -->
     <section id="result-screen" class="screen" role="main" aria-label="Your Soul Mission Results">
-      <div class="card">
+      <div class="card" style="max-width:680px;margin:0 auto;padding:2.5rem 1.5rem 3.5rem;">
 
-        <!-- Header -->
-        <div class="result-header">
-          <span id="result-emoji" role="img" aria-label="Soul type emoji"></span>
-          <h2 id="result-name"></h2>
-          <p id="result-tagline"></p>
+        <!-- Cosmic Revelation Header -->
+        <div style="text-align:center;padding:2rem 0 1.5rem;">
+          <div id="result-emoji" role="img" aria-label="Soul type emoji" style="font-size:4.5rem;display:block;margin-bottom:1rem;filter:drop-shadow(0 0 24px rgba(212,175,55,0.6));"></div>
+          <p style="color:rgba(212,175,55,0.7);font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;margin:0 0 0.6rem;">Your Soul Type</p>
+          <h2 id="result-name" style="font-size:clamp(2.2rem,7vw,3.2rem);font-weight:800;color:#fff;margin:0 0 0.6rem;letter-spacing:0.02em;"></h2>
+          <p id="result-tagline" style="color:rgba(212,175,55,0.9);font-size:1rem;font-weight:500;letter-spacing:0.04em;margin:0;line-height:1.4;"></p>
         </div>
 
-        <div class="cosmic-divider">✦ · · · ✦</div>
+        <div style="text-align:center;color:rgba(212,175,55,0.35);letter-spacing:0.25em;margin:0.5rem 0 2rem;font-size:0.9rem;">✦ · · · · · ✦ · · · · · ✦</div>
 
-        <!-- Mission -->
-        <div class="result-section section-mission">
-          <div class="result-section-label">⭐ Your Soul Mission</div>
-          <p id="result-mission"></p>
+        <!-- Soul Mission Card -->
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.75rem 2rem;margin-bottom:1.25rem;">
+          <div style="color:#D4AF37;font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.75rem;font-weight:600;">⭐ Your Soul Mission</div>
+          <p id="result-mission" style="color:rgba(255,255,255,0.85);line-height:1.8;margin:0;font-size:0.97rem;"></p>
         </div>
 
-        <!-- Trap -->
-        <div class="result-section section-trap">
-          <div class="result-section-label">⚠️ Your Matrix Trap</div>
-          <p id="result-trap"></p>
+        <!-- Trap Card -->
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,100,80,0.15);border-radius:16px;padding:1.75rem 2rem;margin-bottom:1.25rem;">
+          <div style="color:#e07060;font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.75rem;font-weight:600;">⚠️ Your Matrix Trap</div>
+          <p id="result-trap" style="color:rgba(255,255,255,0.8);line-height:1.8;margin:0;font-size:0.97rem;"></p>
         </div>
 
-        <!-- Activation -->
-        <div class="result-section section-activation">
-          <div class="result-section-label">⚡ Your B-Life Activation</div>
-          <p id="result-activation"></p>
+        <!-- Activation Card -->
+        <div style="background:rgba(212,175,55,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:16px;padding:1.75rem 2rem;margin-bottom:1.25rem;">
+          <div style="color:#D4AF37;font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.75rem;font-weight:600;">⚡ Your B-Life Activation</div>
+          <p id="result-activation" style="color:rgba(255,255,255,0.85);line-height:1.8;margin:0;font-size:0.97rem;"></p>
         </div>
 
-        <!-- Planet -->
-        <div class="result-section section-planet">
-          <div class="result-section-label">🪐 Your Home Planet Energy</div>
-          <p id="result-planet"></p>
+        <!-- Planet Card -->
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.75rem 2rem;margin-bottom:1.5rem;">
+          <div style="color:rgba(180,160,220,0.9);font-size:0.75rem;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:0.75rem;font-weight:600;">🪐 Your Home Planet Energy</div>
+          <p id="result-planet" style="color:rgba(255,255,255,0.78);line-height:1.8;margin:0;font-size:0.97rem;"></p>
         </div>
 
-        <!-- Secondary -->
-        <p class="secondary-mention" id="secondary-type"></p>
+        <!-- Secondary Type -->
+        <p id="secondary-type" style="text-align:center;color:rgba(255,255,255,0.5);font-size:0.88rem;line-height:1.6;margin:0 0 2rem;padding:0 0.5rem;"></p>
 
-        <!-- Actions -->
-        <div class="result-actions">
-          <button id="print-btn" class="btn-primary">🖨️ Print My Mission</button>
-          <button id="retake-btn" class="btn-secondary">🔄 Retake Quiz</button>
-        </div>
-        <p style="text-align:center;font-size:0.78rem;color:rgba(255,255,255,0.4);margin:0.5rem 0 0;">
-          Not quite right? Each retake draws a fresh set of questions — your reading is unique.
-        </p>
+        <!-- Divider -->
+        <div style="text-align:center;color:rgba(212,175,55,0.3);letter-spacing:0.2em;margin-bottom:2rem;font-size:0.85rem;">✦ · · · ✦ · · · ✦</div>
 
-        <!-- CTAs -->
-        <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem;align-items:center;">
-          <!-- Primary: Full Soul Matrix Reading -->
+        <!-- Primary CTA — Gold -->
+        <div style="display:flex;flex-direction:column;gap:1rem;align-items:center;margin-bottom:2rem;">
           <a
             id="deep-read-btn"
             href="deep-read.html"
-            style="display:block;width:100%;max-width:420px;background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:700;font-size:1rem;padding:1rem 1.5rem;border-radius:12px;text-decoration:none;letter-spacing:0.03em;text-align:center;box-shadow:0 0 28px rgba(212,175,55,0.4);transition:all 0.25s;">
-            📖 Get Your Full Soul Matrix Reading — $9
+            style="display:block;width:100%;max-width:480px;background:linear-gradient(135deg,#D4AF37,#b8960c);color:#0f0f2a;font-weight:800;font-size:1.05rem;padding:1.1rem 1.75rem;border-radius:14px;text-decoration:none;letter-spacing:0.03em;text-align:center;box-shadow:0 0 36px rgba(212,175,55,0.45);transition:all 0.25s;line-height:1.3;">
+            📖 Get Your Complete Soul Matrix Reading — $9
           </a>
-          <!-- Secondary: Book -->
+          <!-- Secondary CTA — soft -->
           <a
             href="https://www.amazon.com/dp/9798886454543"
             target="_blank"
             rel="noopener"
-            style="display:block;width:100%;max-width:420px;background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.4);color:#D4AF37;font-weight:600;font-size:0.95rem;padding:0.9rem 1.5rem;border-radius:12px;text-decoration:none;letter-spacing:0.02em;text-align:center;transition:all 0.25s;">
-            📚 Read the book: The Earth Matrix
+            style="display:block;width:100%;max-width:480px;background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.35);color:rgba(212,175,55,0.85);font-weight:600;font-size:0.95rem;padding:0.95rem 1.75rem;border-radius:14px;text-decoration:none;letter-spacing:0.02em;text-align:center;transition:all 0.25s;">
+            📚 Get The Earth Matrix book
           </a>
         </div>
+
+        <!-- Retake / Print row -->
+        <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+          <button id="retake-btn" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.65);font-size:0.85rem;padding:0.6rem 1.25rem;border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.2s;">🔄 Retake Quiz</button>
+          <button id="print-btn" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.65);font-size:0.85rem;padding:0.6rem 1.25rem;border-radius:8px;cursor:pointer;font-family:inherit;transition:all 0.2s;">🖨️ Print</button>
+        </div>
+        <p style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.3);margin:0.75rem 0 0;">
+          Not quite right? Each retake draws a fresh set of questions.
+        </p>
 
       </div>
     </section>
